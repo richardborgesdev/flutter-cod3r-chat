@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cod3r_chat/pages/loading_page.dart';
+import 'package:flutter_cod3r_chat/pages/auth_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoadingPage(),
+      home: const AuthPage(),
       debugShowCheckedModeBanner: false,
     );
   }
