@@ -13,7 +13,11 @@ class _AuthFormState extends State<AuthForm> {
   final _formData = AuthFormData();
 
   void _submit() {
-    _formKey.currentState?.validate();
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) {
+      return;
+    }
   }
 
   @override
@@ -34,6 +38,15 @@ class _AuthFormState extends State<AuthForm> {
                   decoration: InputDecoration(
                     labelText: 'Nome',
                   ),
+                  validator: (name) {
+                    final nameToValidate = name ?? '';
+
+                    if (nameToValidate.trim().length < 5) {
+                      return 'Nome deve ter no mínimo 5 caracteres';
+                    }
+
+                    return null;
+                  },
                 ),
               TextFormField(
                 key: ValueKey('email'),
@@ -42,6 +55,15 @@ class _AuthFormState extends State<AuthForm> {
                 decoration: InputDecoration(
                   labelText: 'E-mail',
                 ),
+                validator: (email) {
+                  final emailToValidate = email ?? '';
+
+                  if (!emailToValidate.contains('@')) {
+                    return 'E-mail informado não é valido';
+                  }
+
+                  return null;
+                },
               ),
               TextFormField(
                 key: ValueKey('password'),
@@ -51,6 +73,15 @@ class _AuthFormState extends State<AuthForm> {
                 decoration: InputDecoration(
                   labelText: 'Senha',
                 ),
+                validator: (password) {
+                  final passwordToValidate = password ?? '';
+
+                  if (passwordToValidate.length < 6) {
+                    return 'Senha deve ter no mínimo 6 caracteres';
+                  }
+
+                  return null;
+                },
               ),
               SizedBox(height: 12),
               ElevatedButton(
