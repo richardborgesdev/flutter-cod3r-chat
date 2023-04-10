@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cod3r_chat/models/auth_form_data.dart';
+import 'package:flutter_cod3r_chat/core/models/auth_form_data.dart';
 
 import '../components/auth_form.dart';
 
