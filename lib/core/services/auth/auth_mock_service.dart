@@ -5,8 +5,11 @@ import 'package:flutter_cod3r_chat/core/services/auth/auth_service.dart';
 import '../../models/chat_user.dart';
 
 class AuthMockService implements AuthService {
+  static Map<String, ChatUser> _users = {};
+  static ChatUser? _currentUser;
+
   ChatUser? get currentUser {
-    return null;
+    return _currentUser;
   }
 
   Stream<ChatUser?> get userChanges {}
