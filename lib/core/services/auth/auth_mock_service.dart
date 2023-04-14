@@ -7,7 +7,7 @@ import 'package:flutter_cod3r_chat/core/services/auth/auth_service.dart';
 import '../../models/chat_user.dart';
 
 class AuthMockService implements AuthService {
-  static Map<String, ChatUser> _users = {};
+  static final Map<String, ChatUser> _users = {};
   static ChatUser? _currentUser;
   static MultiStreamController<ChatUser?>? _controller;
   static final _userStream = Stream<ChatUser?>.multi((controller) {
@@ -19,19 +19,21 @@ class AuthMockService implements AuthService {
     return _currentUser;
   }
 
-  Stream<ChatUser?> get userChanges {}
+  Stream<ChatUser?> get userChanges {
+    return _userStream;
+  }
 
   Future<void> signup(
     String name,
     String email,
     String password,
-    File image,
+    File? image,
   ) async {
     final newUser = ChatUser(
       id: Random().nextDouble().toString(),
       name: name,
       email: email,
-      imageURL: image.path,
+      imageURL: image?.path ?? '/assets/images',
     );
 
     _users.putIfAbsent(email, () => newUser);
