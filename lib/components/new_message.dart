@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cod3r_chat/core/services/auth/auth_service.dart';
+import 'package:flutter_cod3r_chat/core/services/chat/chat_service.dart';
 
 class NewMessage extends StatefulWidget {
   const NewMessage({super.key});
@@ -9,8 +11,16 @@ class NewMessage extends StatefulWidget {
 
 class _NewMessageState extends State<NewMessage> {
   String _enteredMessage = '';
+  final _messageControler = TextEditingController();
 
-  void _sendMessage() {}
+  Future<void> _sendMessage() async {
+    final user = AuthService().currentUser;
+
+    if (user != null) {
+      await ChatService().save(_enteredMessage, user);
+      _messageControler.clear();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +28,16 @@ class _NewMessageState extends State<NewMessage> {
       children: [
         Expanded(
           child: TextField(
+            controller: _messageControler,
+            onChanged: (msg) => setState(() => _enteredMessage = msg),
             decoration: InputDecoration(
               labelText: 'Enviar mensagem...',
             ),
+            onSubmitted: (_) {
+              if (_enteredMessage.trim().isNotEmpty) {
+                _sendMessage();
+              }
+            },
           ),
         ),
         IconButton(
