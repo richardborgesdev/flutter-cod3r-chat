@@ -13,32 +13,38 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Cod3r Chat'),
         actions: [
-          DropdownButton(
-            items: [
-              DropdownMenuItem(
-                child: Container(
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.exit_to_app,
-                        color: Colors.black87,
-                      ),
-                      SizedBox(width: 10),
-                      Text('Sair'),
-                    ],
+          DropdownButtonHideUnderline(
+            child: DropdownButton(
+              items: [
+                DropdownMenuItem(
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.exit_to_app,
+                          color: Colors.black87,
+                        ),
+                        SizedBox(width: 10),
+                        Text('Sair'),
+                      ],
+                    ),
                   ),
                 ),
+              ],
+              onChanged: (value) {
+                if (value == 'logout') {
+                  AuthService().logout();
+                }
+              },
+              icon: Icon(
+                Icons.more_vert,
+                color: Theme.of(context).primaryIconTheme.color,
               ),
-            ],
-            onChanged: (value) {
-              if (value == 'logout') {
-                AuthService().logout();
-              }
-            },
-            icon: Icon(
-              Icons.more_vert,
-              color: Theme.of(context).primaryIconTheme.color,
             ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications),
           ),
         ],
       ),
