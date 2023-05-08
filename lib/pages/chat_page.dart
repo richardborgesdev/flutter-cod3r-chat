@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cod3r_chat/components/messages.dart';
 import 'package:flutter_cod3r_chat/components/new_message.dart';
+import 'package:flutter_cod3r_chat/pages/notification_page.dart';
+import 'package:provider/provider.dart';
 
 import '../core/services/auth/auth_service.dart';
+import '../core/services/notification/chat_notification_service.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
@@ -42,9 +45,35 @@ class ChatPage extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notifications),
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return NotificationPage();
+                      },
+                    ),
+                  );
+                },
+                icon: Icon(Icons.notifications),
+              ),
+              Positioned(
+                top: 5,
+                right: 5,
+                child: CircleAvatar(
+                  maxRadius: 10,
+                  backgroundColor: Colors.red.shade800,
+                  child: Text(
+                    '${Provider.of<ChatNotificationService>(context).itemsCount}',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ],
       ),
