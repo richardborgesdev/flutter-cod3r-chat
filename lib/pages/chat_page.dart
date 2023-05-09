@@ -78,14 +78,25 @@ class ChatPage extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-          child: Column(
-        children: [
-          Expanded(
-            child: Messages(),
-          ),
-          NewMessage(),
-        ],
-      )),
+        child: Column(
+          children: [
+            Expanded(
+              child: Messages(),
+            ),
+            NewMessage(),
+          ],
+        ),
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.add),
+      //   onPressed: () {
+      //     Provider.of<ChatNotificationService>(context, listen: false)
+      //         .add(ChatNotification(
+      //       title: 'Mais uma notificação',
+      //       body: Random().nextDouble().toString(),
+      //     ));
+      //   },
+      // ),
     );
   }
 }
