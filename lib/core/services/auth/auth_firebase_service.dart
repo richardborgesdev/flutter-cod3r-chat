@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_cod3r_chat/core/services/auth/auth_service.dart';
@@ -49,6 +50,8 @@ class AuthFirebaseService implements AuthService {
 
     credential.user?.updateDisplayName(name);
     credential.user?.updatePhotoURL(imageURL);
+
+    await _saveChatUser(_toChatUser(credential.user!, imageURL));
   }
 
   Future<void> login(String email, String password) async {
@@ -75,12 +78,23 @@ class AuthFirebaseService implements AuthService {
     return await imageRef.getDownloadURL();
   }
 
-  static ChatUser _toChatUser(User user) {
+  Future<void> _saveChatUser(ChatUser user) async {
+    final store = FirebaseFirestore.instance;
+    final docRef = store.collection('users').doc(user.id);
+
+    return docRef.set({
+      'name': user.name,
+      'email': user.email,
+      'imageURL': user.imageURL,
+    });
+  }
+
+  static ChatUser _toChatUser(User user, [String? imageURL]) {
     return ChatUser(
       id: user.uid,
       name: user.displayName ?? user.email!.split('@')[0],
       email: user.email!,
-      imageURL: user.photoURL ?? 'assets/images/avatar.png',
+      imageURL: imageURL ?? user.photoURL ?? 'assets/images/avatar.png',
     );
   }
 }
