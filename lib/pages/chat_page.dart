@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cod3r_chat/components/messages.dart';
 import 'package:flutter_cod3r_chat/components/new_message.dart';
@@ -7,8 +8,22 @@ import 'package:provider/provider.dart';
 import '../core/services/auth/auth_service.dart';
 import '../core/services/notification/chat_notification_service.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    final firebaseMsg = FirebaseMessaging();
+    firebaseMsg.requestPermission();
+  }
 
   @override
   Widget build(BuildContext context) {
